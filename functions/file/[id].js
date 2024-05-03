@@ -34,9 +34,9 @@ export async function onRequest(context) {
         return response;
       }
       
-      if(!allowedDomains.includes(refererUrl.hostname)){
-          return Response.redirect("https://tgphoto.pages.dev/file/f8a22a5e0704346251ce7.png", 302);
-      }
+      // if(!allowedDomains.includes(refererUrl.hostname)){
+      //     return Response.redirect("https://tgphoto.pages.dev/file/f8a22a5e0704346251ce7.png", 302);
+      // }
       
       if (
         typeof env.img_url == "undefined" ||
