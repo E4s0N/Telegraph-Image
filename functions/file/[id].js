@@ -15,9 +15,7 @@ export async function onRequest(context) {
   //判断是否在allow的域名数组内
   let Referer = request.headers.get('Referer') || "Referer";
   let refererUrl = new URL(Referer);
-  if(!allowedDomains.includes(refererUrl.hostname)){
-      return Response.redirect("https://tgphoto.pages.dev/file/f8a22a5e0704346251ce7.png", 302);
-  };
+
   
   const response = fetch("https://telegra.ph/" + url.pathname + url.search, {
     method: request.method,
@@ -35,7 +33,11 @@ export async function onRequest(context) {
         //show the image
         return response;
       }
-
+      
+      if(!allowedDomains.includes(refererUrl.hostname)){
+          return Response.redirect("https://tgphoto.pages.dev/file/f8a22a5e0704346251ce7.png", 302);
+      }
+      
       if (
         typeof env.img_url == "undefined" ||
         env.img_url == null ||
