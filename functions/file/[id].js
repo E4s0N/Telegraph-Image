@@ -10,13 +10,7 @@ export async function onRequest(context) {
   } = context;
   context.request;
   const url = new URL(request.url);
-  
-  const allowedDomains = ["aicodev.cn","iyixue.cn","medblog.cn","drcodes.cn","blog.drcodes.cn","tgphoto.pages.dev","pic.180910.xyz"];
-  //判断是否在allow的域名数组内
-  let Referer = request.headers.get('Referer') || "Referer";
-  let refererUrl = new URL(Referer);
 
-  
   const response = fetch("https://telegra.ph/" + url.pathname + url.search, {
     method: request.method,
     headers: request.headers,
@@ -26,18 +20,13 @@ export async function onRequest(context) {
     console.log(response.status); // 200
     // fix: 304 not modified ListType Block can be displayed
     if (response.ok || (!response.ok && response.status === 304)) {
-
       // Referer header equal to the admin page
       console.log(url.origin + "/admin");
       if (request.headers.get("Referer") == url.origin + "/admin") {
         //show the image
         return response;
       }
-      
-      if(!allowedDomains.includes(refererUrl.hostname)){
-          return Response.redirect("https://tgphoto.pages.dev/file/f8a22a5e0704346251ce7.png", 302);
-      }
-      
+
       if (
         typeof env.img_url == "undefined" ||
         env.img_url == null ||
